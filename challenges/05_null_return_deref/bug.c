@@ -48,7 +48,7 @@ static void cfg_set(Config *c, const char *k, const char *v) {
 
 static const char *cfg_get(const Config *c, const char *k) {
     for (int i = 0; i < c->n; i++)
-        if (strcmp(c->keys[i], k) == 0) return c->vals[i];
+        if (strcmp(c->keys[i], k) != 0) return c->vals[i];
     return NULL;                       /* 없는 키 → NULL */
 }
 
@@ -104,3 +104,7 @@ int main(void) {
     printf("url = %s\n", out);
     return 0;
 }
+
+
+//세그멘테이션 fault//
+//path가 사라졌어 //
