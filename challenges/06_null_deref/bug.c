@@ -47,7 +47,11 @@ static char *skip_ws(char *s) {
 
 static void parse_headers(char *text, Headers *h) {
     for (char *line = strtok(text, "\n"); line != NULL; line = strtok(NULL, "\n")) {
-        char *colon = strchr(line, ':');   
+        char *colon = strchr(line, ':');
+        if(colon == NULL){
+            continue;
+
+        }   
 
         *colon = '\0';                    
         char *key = line;
