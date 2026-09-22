@@ -53,7 +53,7 @@ static void view_set(LineView *out, char **arr, int n) {
 }
 
 static void split_lines(LineView *out, char *text) {
-    char *parts[MAX_LINES];              
+    char **parts = malloc(sizeof(char *) * MAX_LINES);          
     int n = 0;
     /* strtok는 새로 할당하지 않고, 넘겨받은 문자열 내부의 주소를 돌려준다. 
     * 따라서, strtok은 원본 버퍼를 제자리에서 수정한다. 
@@ -87,5 +87,6 @@ int main(void) {
         checksum += (unsigned char)v.lines[i][0];
 
     printf("lines = %d, checksum = %ld\n", v.count, checksum);
+    free(v.lines);
     return 0;
 }
