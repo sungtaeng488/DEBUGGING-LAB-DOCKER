@@ -83,10 +83,17 @@ static void deliver(Broker *b, Subscriber sub) {
     while (b->head != b->tail) {
         Msg *m = b->inbox[b->head];
         b->head = (b->head + 1) % QCAP;
-        sub(m);                          
+
+        for (int j = 0; j < b->log_n; j++) {
+            if (m == b->log[j]) {
+                b->log[j] = NULL;
+                break;
+            }
+        }
+
+        sub(m);
     }
 }
-
 static void on_message(Msg *m) {
     printf("recv #%d: %s\n", m->id, m->body);
     msg_free(m);                         
@@ -94,6 +101,9 @@ static void on_message(Msg *m) {
 
 static void broker_shutdown(Broker *b) {
     for (int i = 0; i < b->log_n; i++) {
+        if (b->log[i] == NULL) {
+    continue;
+}
         msg_free(b->log[i]);             
     }
     b->log_n = 0;
