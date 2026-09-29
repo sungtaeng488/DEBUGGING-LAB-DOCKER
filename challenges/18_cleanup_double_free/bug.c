@@ -70,10 +70,8 @@ static int conn_open(Conn *c, size_t bufsz) {
     strcpy(c->tx, "tx-ready");
     for (int i = 0; i < 4; i++) c->state[i] = i;
 
-    if (!handshake_ok(c)) {
-
-        free(c->tx);              
-        goto fail_tx;             
+    if (!handshake_ok(c)) {            
+        goto fail_state;             
     }
 
     return 0;                     
