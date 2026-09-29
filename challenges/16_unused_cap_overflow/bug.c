@@ -41,10 +41,15 @@
 
 
 static void append_field(char *buf, size_t cap, size_t *len, const char *field, char sep) {
+    size_t flen = strlen(field);
+    size_t extra = (*len > 0) ? 1 : 0;
+
+    if (*len + extra + flen + 1 > cap) {
+        return;
+    }
     if (*len > 0) {
         buf[(*len)++] = sep;             
-    }
-    size_t flen = strlen(field);
+    } 
     for (size_t i = 0; i < flen; i++) {
         buf[(*len)++] = field[i];         
     }
