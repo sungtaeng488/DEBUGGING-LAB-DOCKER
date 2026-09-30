@@ -57,7 +57,8 @@ static void signal_trim(Signal *s, size_t keep) {
     if (keep > s->cap) return;
     double *p = realloc(s->samples, keep * sizeof(double));
     if (p) s->samples = p;
-    s->cap = keep;                 
+    s->cap = keep;
+    s->len = keep;
 }
 
 static double signal_energy(const Signal *s) {
